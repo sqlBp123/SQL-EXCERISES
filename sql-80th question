@@ -1,0 +1,7 @@
+question:Find the computer equipment makers not producing any PC models absent in the PC table.
+
+solution:
+with data as(select  distinct p.maker,p.model pmod ,p.type,pc.model pcmod from product p full join pc on pc.model=p.model)
+
+select  distinct maker from data where maker not in(select distinct maker from data where pcmod is null and type='pc')
+
