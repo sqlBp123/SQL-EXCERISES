@@ -1,0 +1,11 @@
+QUESTION:
+For each month-year combination with the maximum sum of payments (out), retrieve all records from the Outcome table.
+
+SOLUTION:(only one database is correct)
+
+with data as(select distinct date from (select date from outcome where YEAR(date) =(select YEAR(date) from outcome group by YEAR(date),MONTH(date) having count(*) >= all(select count(*)  from outcome group by YEAR(date),MONTH(date)) ) and 
+MONTH(date)=(select MONTH(date) from outcome group by YEAR(date),MONTH(date) having count(*) >= all(select count(*)  from outcome group by YEAR(date),MONTH(date)) )
+) t1
+)
+
+select distinct code,point,date ,sum(out) from outcome where date in(select date from data) group by code,point,date
