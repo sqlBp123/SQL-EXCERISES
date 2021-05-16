@@ -1,0 +1,9 @@
+QUESTION:
+For each maker, list the types of products he produces in alphabetic order, using a slash ("/") as a delimiter.
+Result set: maker, list of product types.
+
+Solution:
+with data as(select maker,type from product group by maker,type)
+
+select maker,STRING_AGG(type,'/') WITHIN GROUP(ORDER BY  type) as types from data
+ group by maker
