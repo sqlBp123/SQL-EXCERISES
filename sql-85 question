@@ -1,0 +1,13 @@
+QUESTION:
+Get makers producing either printers only or personal computers only; in case of PC manufacturers they should produce at least 3 models.
+
+SOLUTION:
+select maker from product  where type='printer'
+EXCEPT
+select maker From product where type in ('pc','laptop')
+
+UNION
+
+(select maker from product where type='pc' group by maker having count(model)> =3 
+EXCEPT
+select maker From product where type in ('printer','laptop'))
